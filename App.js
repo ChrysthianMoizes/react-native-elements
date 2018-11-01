@@ -20,7 +20,8 @@ export default class App extends Component {
     super()
     this.state = {
       selectedIndex: 2,
-      checked: false
+      checked: false,
+      value: 20,
     }
     this.updateIndex = this.updateIndex.bind(this)
   }
@@ -48,68 +49,74 @@ export default class App extends Component {
 
         <View>
 
+          <Avatar
+            large
+            containerStyle={{alignSelf: 'center', marginTop: 10}}
+            rounded={true}
+            source={
+              {uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg"}}/>
+
           <SearchBar
-            containerStyle={{marginTop: 10}}
-            round
-            lightTheme
-            showLoadingIcon
-            cancelButtonTitle="Cancel"
+            containerStyle={{marginTop: 10, marginStart: 40, marginEnd: 40}}
+            round={true}
+            lightTheme={true}
+            showLoadingIcon={true}
             clearIcon={{ color: 'white' }}
-            placeholder='Type Here...' />
+            placeholder='Aonde vamos hoje?' />
 
           <View style={{
             flex: 1, 
             alignItems: 'stretch', 
             justifyContent: 'center',
-            marginTop: 40}}>
+            marginTop: 40,
+            marginStart: 40,
+            marginEnd: 40}}>
             <Slider
               value={this.state.value}
+              minimumValue={0}
+              maximumValue={50}
+              disabled={false}
+              maximumTrackTintColor={'#ddd'}
+              minimumTrackTintColor={'#000'}
+              thumbTintColor={'#da2'}
+              step={1}
               onValueChange={(value) => this.setState({value})} />
             <Text>Value: {this.state.value}</Text>
           </View>
 
-        <View style={{flexDirection: 'row', marginTop: 30, justifyContent: 'center'}}>
-          <Icon name='android' reverse raised size={30} color='#da552f'/>
-          <Icon name='g-translate' color='#00aced' size={40} />
-          <Button
-            textStyle={{color: '#FFF'}}
-            backgroundColor={'#da552f'}
-            title='Voltar'
-            icon={{name: 'arrow-left', type: 'font-awesome'}}
-          />
-        </View>
+        <View style={{
+          flexDirection: 'row', 
+          marginTop: 30, 
+          justifyContent: 'center'
+        }}>
 
-        <View style={{flexDirection: 'row'}}>
-
-          <CheckBox
-            title='Marque aqui!'
-            checked={this.state.checked}
-            onPress={() => this.setState({checked: !this.state.checked})}
-          />
-
-          <Avatar
-          size='medium'
-          rounded
-          activeOpacity={0.7}
-          source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg"}}/>
-
-          <Badge
-            value={3}
-            textStyle={{ color: 'orange', fontWeight: 'bold' }}
-          />
         </View>
 
         <SocialIcon 
           title='Sign In With Google'
-          style={{backgroundColor: '#da552f', width: 250}} 
+          style={{
+            backgroundColor: '#da552f', 
+            width: 250, 
+            alignSelf: 'center'}} 
           button 
           type='google'/>
 
         <SocialIcon title='Sign In With Facebook' 
-          style={{width: 250}} 
+          style={{alignSelf: 'center', width: 250}} 
           button type='facebook'/>
 
-        <View style={{flexDirection: 'row'}}>
+        <ButtonGroup
+          onPress={this.updateIndex}
+          selectedIndex={this.state.selectedIndex}
+          buttons={buttons}
+          containerStyle={{height: 25, marginTop: 40}}
+        />
+
+        <View style={{
+          flexDirection: 'row', 
+          marginBottom: 20, 
+          marginTop: 20, 
+          alignSelf: 'center'}}>
 
           <SocialIcon type='twitter'/>
           <SocialIcon type='instagram'/>
@@ -118,13 +125,6 @@ export default class App extends Component {
           <SocialIcon type='youtube'/>
 
         </View>
-
-        <ButtonGroup
-          onPress={this.updateIndex}
-          selectedIndex={this.state.selectedIndex}
-          buttons={buttons}
-          containerStyle={{height: 25}}
-        />
 
         </View>
 
